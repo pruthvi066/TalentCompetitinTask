@@ -1,11 +1,12 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Dropdown } from 'semantic-ui-react'
-import { countries } from '../common.js'
+import { Dropdown } from 'semantic-ui-react';
+//import { countries } from './countries.json';
 
 export class Location extends React.Component {
     constructor(props) {
-        super(props)
+
+        super(props);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -39,7 +40,7 @@ export class Location extends React.Component {
         const selectedCountry = this.props.location.country;
         const selectedCity = this.props.location.city;
         
-        countriesOptions = Object.keys(countries).map((x) => <option key={x} value={x}>{x}</option>);
+        countriesOptions = Object.keys(Countries).map((x) => <option key={x} value={x}>{x}</option>);
 
         if (selectedCountry != "" && selectedCountry != null ) {
            
@@ -56,10 +57,20 @@ export class Location extends React.Component {
             </select><br/></span>
         }
     
-    return(
-        <div>
+        return (
+            <div>
             <select className="ui right labeled dropdown"
-                placeholder="Country"
+              
+                value={selectedCountry}
+                onChange={this.handleChange}
+                name="nationality">
+
+                <option value="">Select a country</option>
+                {countriesOptions}
+            </select>
+
+            <select className="ui right labeled dropdown"
+                placeholder=""
                 value={selectedCountry}
                 onChange={this.handleChange}
                 name="country">

@@ -283,6 +283,7 @@ video {
 
 img {
     border-style: none;
+    border-radius:50%;
 }
 
 /**

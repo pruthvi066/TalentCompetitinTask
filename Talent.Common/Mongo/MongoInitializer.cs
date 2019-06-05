@@ -39,6 +39,11 @@ namespace Talent.Common.Mongo
             ConventionRegistry.Register("MarsConventions", new MongoConvention(), x => true);
         }
 
+        public Task Initialize()
+        {
+            throw new NotImplementedException();
+        }
+
         private class MongoConvention: IConventionPack
         {
             public IEnumerable<IConvention> Conventions => new List<IConvention>
