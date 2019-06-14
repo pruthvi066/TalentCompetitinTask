@@ -7268,6 +7268,7 @@ i.icon {
     -webkit-font-smoothing: antialiased;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    
 }
 
     i.icon:before {
@@ -25255,7 +25256,7 @@ Floated Menu / Item
     -ms-flex-direction: column;
     flex-direction: column;
     width: 400px;
-    min-height: 300px;
+   // min-height: 300px;
     background: #FFFFFF;
     padding: 0em;
     border: none;
