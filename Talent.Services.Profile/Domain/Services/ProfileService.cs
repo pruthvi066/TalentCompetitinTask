@@ -400,8 +400,30 @@ namespace Talent.Services.Profile.Domain.Services
         }
 
         public async Task<IEnumerable<TalentSnapshotViewModel>> GetTalentSnapshotList(string employerOrJobId, bool forJob, int position, int increment)
-        {
-            //Your code here;
+        {   try
+            {
+                // var profile = new List<User>();
+                List<User> profile = _userRepository.GetQueryable().ToList();
+                var results = new List<TalentSnapshotViewModel>();
+                List<TalentSnapshotViewModel> dummyData = profile.Select(x => new TalentSnapshotViewModel
+                {
+                    CurrentEmployment = "MVP Studio",
+                    Level = "SoftWare Developer",
+                    Skills = new List<string> { "C#", ".Net Core", "Javascript", "ReactJS", "PreactJS" },
+                    Summary = "Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.",
+                    Name = x.FirstName,
+                    PhotoId = x.ProfilePhotoUrl,
+                    Visa = x.VisaStatus
+                }).ToList();
+                results = dummyData;
+                return results;
+
+            }
+            catch (MongoException e)
+            {
+                return null;
+
+            }
             throw new NotImplementedException();
         }
 

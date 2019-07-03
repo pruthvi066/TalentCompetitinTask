@@ -676,33 +676,25 @@ namespace Talent.Services.Profile.Controllers
 
         [HttpGet("getTalent")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "recruiter, employer")]
-        public async Task<IActionResult> GetTalentSnapshots()
+        public async Task<IActionResult> GetTalentSnapshots(FeedIncrementModel feed)
         {
-            string id = "";
-            String Id = String.IsNullOrWhiteSpace(id) ? _userAppContext.CurrentUserId : id;
-            Employer profile = null;
-            profile = (await _employerRepository.GetByIdAsync(Id));
             try
             {
-                var result = new TalentSnapshotViewModel
-                {
-                    CurrentEmployment = "Software Developer at XYZ",
-                    Level = "Junior",
-                    Name = "Pruthvi Patel",
-                    PhotoId = "",
-                    Skills = new List<string> { "C#", ".Net Core", "Javascript", "ReactJS", "PreactJS" },
-                    Summary = "Veronika Ossi is a set designer living in New York who enjoys kittens, music, and partying.",
-                    Visa = "Citizen"
-                };
-                        
-                  
-                    return Json(new { Success = true, Data = result });
+                var result = (await _profileService.GetTalentSnapshotList(_userAppContext.CurrentUserId, false, feed.Position, feed.Number)).ToList();
+
+              
+
+                return Json(new { Success = true, Data = result });
             }
             catch (Exception e)
             {
                 return Json(new { Success = false, e.Message });
             }
+
         }
+             
+
+        
         #endregion
 
         #region TalentMatching

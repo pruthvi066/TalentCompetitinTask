@@ -8,11 +8,12 @@ export default class TalentCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            profileData: "",
+            profileData: [],
             showEditSection: false
         }
         this.openEdit = this.openEdit.bind(this)
         this.closeEdit = this.closeEdit.bind(this)
+        this.loadData = this.loadData.bind(this)
     };
 
     componentDidMount() {
@@ -36,7 +37,7 @@ export default class TalentCard extends React.Component {
     updateWithoutSave(newValues) {
      
        
-        let newProfile = Object.assign({}, this.state.profileData, newValues)
+        let newProfile = Object.assign([], this.state.profileData, newValues)
         this.setState({
             profileData: newProfile
         })
@@ -63,86 +64,99 @@ export default class TalentCard extends React.Component {
     }
     renderEdit() {
         let skills = ["C#", ".Net Core", "Javascript", "ReactJS", "PreactJS"];
-        let string = this.state.profileData.currentEmployment
-        
+        let string = this.state.profileData.currentEmployment;
+        const data = this.state.profileData;
+        const profileData = this.state.profileData;
+
         return (
-
-            <Card >
-
-
-                <Card.Content>
-                    <Card.Header>{this.state.profileData.name}  
-                        <Icon name="star" size='large' className="ui right floated" />
-
-                
-
-
-                    </Card.Header>
-
-                </Card.Content>
-             
-                <Card.Description>
-
-                    <Grid columns={2}>
-                          
-                            <Grid.Column>
-                            <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={true} rounded />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Card.Content>
-                                <Card.Header>Talent Snapshot</Card.Header><br/>
-                                <Card.Header>CURRENT EMPLOYER</Card.Header>
-                                <Card.Meta>{string.slice(22, 25)}</Card.Meta>
-                                <Card.Header>VISA STATUS</Card.Header>
-                                <Card.Meta>{this.state.profileData.visa}</Card.Meta>
-                                <Card.Header>POSITION</Card.Header>
-                                <Card.Meta>{string.slice(0, 18)}</Card.Meta>
-                            </Card.Content>
-                        </Grid.Column>
-                    </Grid>
-                    </Card.Description>
-           
-                    
+            <div>
                
-                <Card.Content extra>
-                    <Grid divided='vertically'>
-                        <Grid.Row columns={4}>
-                            <Grid.Column>
-                                <Icon name="video icon" onClick={this.closeEdit} size='large' />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="file pdf outline" size='large' />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="linkedin" size='large'/>
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="github" size='large'/>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
+                <Card.Group >
+                    {profileData.map(talent => ( 
+
+
+                    
+                        <Card >
+                            <Card.Content>
+                                <Card.Header>{talent.name}
+                                    <Icon name="star" size='large' className="ui right floated" />
 
 
 
 
-                </Card.Content>
+                                </Card.Header>
 
-                <Card.Content>
-                    <Label basic color='blue'>{skills[0]}</Label>
-                </Card.Content>
-            </Card>)
+                            </Card.Content>
 
+                            <Card.Description>
+
+                                <Grid columns={2}>
+
+                                    <Grid.Column>
+                                        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={true} rounded />
+                                    </Grid.Column>
+                                    <Grid.Column>
+                                        <Card.Content>
+                                            <Card.Header>Talent Snapshot</Card.Header><br />
+                                            <Card.Header>CURRENT EMPLOYER</Card.Header>
+                                            <Card.Meta>{talent.currentEmployment}</Card.Meta>
+                                            <Card.Header>VISA STATUS</Card.Header>
+                                            <Card.Meta>{talent.visa}</Card.Meta>
+                                            <Card.Header>POSITION</Card.Header>
+                                            <Card.Meta>{talent.level}</Card.Meta>
+                                        </Card.Content>
+                                    </Grid.Column>
+                                </Grid>
+                            </Card.Description>
+
+
+
+                            <Card.Content extra>
+                                <Grid divided='vertically'>
+                                    <Grid.Row columns={4}>
+                                        <Grid.Column>
+                                            <Icon name="video icon" onClick={this.closeEdit} size='large' />
+                                        </Grid.Column>
+                                        <Grid.Column>
+                                            <Icon name="file pdf outline" size='large' />
+                                        </Grid.Column>
+                                        <Grid.Column>
+                                            <Icon name="linkedin" size='large' />
+                                        </Grid.Column>
+                                        <Grid.Column>
+                                            <Icon name="github" size='large' />
+                                        </Grid.Column>
+                                    </Grid.Row>
+                                </Grid>
+
+
+
+
+                            </Card.Content>
+
+                            <Card.Content>
+                                <Label basic color='blue'>{skills[0]}</Label>
+                            </Card.Content>
+                        </Card>))}
+                </Card.Group>
+            </div>
+
+
+        )
     }
+        
     renderDisplay() {
        
         let skills = ["C#", ".Net Core", "Javascript", "ReactJS", "PreactJS"];
         return (
+            
+                <Card>
 
-            <Card >
+        
 
                
-                <Card.Content>
-                    <Card.Header>{this.state.profileData.name}
+                    <Card.Content>
+                    <Card.Header>{this.state.profileData.name} 
                         
                         <Icon name="star" size='large' className="ui right floated" />
 
@@ -182,9 +196,9 @@ export default class TalentCard extends React.Component {
                     <Label basic color='blue'>{skills[0]}</Label>
                 </Card.Content>
 
-                </Card>
+                </Card>)
 
-        )
+        
        
     }
 }
