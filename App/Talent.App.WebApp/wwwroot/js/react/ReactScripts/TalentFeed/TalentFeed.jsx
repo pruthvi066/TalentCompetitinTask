@@ -18,7 +18,7 @@ export default class TalentFeed extends React.Component {
 
         this.state = {
             profileData: "",
-                   loadNumber: 5,
+            loadNumber: 5,
             loadPosition: 0,
             feedData: [],
             watchlist: [],
@@ -26,9 +26,9 @@ export default class TalentFeed extends React.Component {
             loadingFeedData: false,
             companyDetails: null
         }
-        
-      
-     
+
+
+
 
         this.init = this.init.bind(this);
         this.loadData = this.loadData.bind(this);
@@ -38,8 +38,8 @@ export default class TalentFeed extends React.Component {
     init() {
         let loaderData = TalentUtil.deepCopy(this.state.loaderData)
         loaderData.isLoading = false
-       this.setState({ loaderData });
-       
+        this.setState({ loaderData });
+
 
 
     }
@@ -60,11 +60,11 @@ export default class TalentFeed extends React.Component {
             },
             type: "GET",
             success: function (res) {
-               
+
                 this.updateWithoutSave(res.employer)
             }.bind(this)
         })
-       
+
     }
 
     updateWithoutSave(newValues) {
@@ -76,19 +76,19 @@ export default class TalentFeed extends React.Component {
     }
 
     render() {
-       
+
 
         return (
             <BodyWrapper reload={this.init} loaderData={this.state.loaderData}>
                 <div className="ui grid talent-feed container">
-                   
-                        <div className="four wide column">
-                            
-                    <CompanyProfile
-                        details={this.state.profileData.companyContact}
+
+                    <div className="four wide column">
+
+                        <CompanyProfile
+                            details={this.state.profileData.companyContact}
                         />
-                            </div>
-                      
+                    </div>
+
 
                     <div className="six wide column">
 
@@ -99,9 +99,9 @@ export default class TalentFeed extends React.Component {
                         <div className="ui card">
                             <FollowingSuggestion />
                         </div>
-                        </div>
-                  
-                    
+                    </div>
+
+
                 </div>
             </BodyWrapper>
         )

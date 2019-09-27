@@ -17,6 +17,7 @@ namespace Talent.Common.Contracts
         Task Delete(T entity);
         IQueryable<T> Collection { get; }
         IQueryable<T> GetQueryable(bool includeDeleted = false);
+        Task<IEnumerable<T>> GetAll(bool includeDeleted = false);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
     }
 }

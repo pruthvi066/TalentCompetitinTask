@@ -7,21 +7,21 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-
+using MongoDB.Bson.Serialization;
+​
 namespace Talent.Common.Services
 {
     public class Repository<T> : IRepository<T> where T : IMongoCommon, new()
     {
         private readonly IMongoDatabase _database;
-        private IMongoCollection<T> _collection => _database.GetCollection<T>(typeof(T).Name);
-
+        private IMongoCollection<T> _collection => _database.GetCollection<T>(typeof(T).Name);​
         public Repository(IMongoDatabase database)
         {
             _database = database;
         }
-
+​
         public IQueryable<T> Collection => _collection.AsQueryable();
-
+​
         public async Task Add(T entity)
         {
             try
@@ -37,13 +37,13 @@ namespace Talent.Common.Services
                 throw dbEx;
             }
         }
-
+​
         public T Create()
         {
             var entity = new T();
             return entity;
         }
-
+​
         public async Task Delete(T entity)
         {
             try
@@ -52,16 +52,16 @@ namespace Talent.Common.Services
                 {
                     throw new ArgumentNullException("entity");
                 }
-
+​
                 await _collection.DeleteOneAsync(w => w.Id.Equals(entity.Id));
             }
             catch (Exception dbEx)
             {
                 throw dbEx;
             }
-
+​
         }
-
+​
         public async Task<IEnumerable<T>> Get(Expression<Func<T, bool>> predicate)
         {
             for (int i = 0; i < 5; ++i)
@@ -77,9 +77,32 @@ namespace Talent.Common.Services
             }
             throw new ApplicationException("Hit retry limit while trying to query MongoDB");
         }
-
+​
         public IQueryable<T> GetQueryable(bool includeDeleted = false) => _collection.AsQueryable();
-
+​
+        public async Task<IEnumerable<T>> GetAll(bool includeDeleted = false)
+        {
+​
+            var results = new List<T>();
+            var collection = _database.GetCollection<BsonDocument>(typeof(T).Name);
+            await collection.AsQueryable().ForEachAsync((document) =>
+            {
+                try
+                {
+                    var documentObject = BsonSerializer.Deserialize<T>(document.ToJson());
+                    if (documentObject != null)
+                    {
+                        results.Add(documentObject);
+                    }
+                }
+                catch (Exception e)
+                {
+​
+                }
+            });
+            return results;
+        }
+​
         public async Task Update(T entity)
         {
             try
@@ -96,7 +119,7 @@ namespace Talent.Common.Services
                 throw dbEx;
             }
         }
-
+​
         public async Task<T> GetByIdAsync(object id)
         {
             for (int i = 0; i < 5; ++i)
@@ -113,7 +136,7 @@ namespace Talent.Common.Services
             }
             throw new ApplicationException("Hit retry limit while trying to query MongoDB");
         }
-
+​
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             for (int i = 0; i < 5; ++i)
@@ -129,7 +152,6 @@ namespace Talent.Common.Services
             }
             throw new ApplicationException("Hit retry limit while trying to query MongoDB");
         }
-    }
-
-
+    }​
+​
 }

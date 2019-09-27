@@ -35,19 +35,19 @@ export default class TalentCard extends React.Component {
         })
     }
     updateWithoutSave(newValues) {
-     
-       
+
+
         let newProfile = Object.assign([], this.state.profileData, newValues)
         this.setState({
             profileData: newProfile
         })
-       
+
     }
     openEdit() {
-      
+
         this.setState({
             showEditSection: true,
-           
+
         })
     }
     closeEdit() {
@@ -70,12 +70,12 @@ export default class TalentCard extends React.Component {
 
         return (
             <div>
-               
+
                 <Card.Group >
-                    {profileData.map(talent => ( 
+                    {profileData.map(talent => (
 
 
-                    
+
                         <Card >
                             <Card.Content>
                                 <Card.Header>{talent.name}
@@ -144,62 +144,66 @@ export default class TalentCard extends React.Component {
 
         )
     }
-        
+
     renderDisplay() {
-       
+
         let skills = ["C#", ".Net Core", "Javascript", "ReactJS", "PreactJS"];
+        const { profileData } = this.state;
         return (
-            
-                <Card>
-
-        
-
+            <div>
                
+            <Card>
+
+
+              
+
                     <Card.Content>
-                    <Card.Header>{this.state.profileData.name} 
-                        
-                        <Icon name="star" size='large' className="ui right floated" />
+                        <Card.Header>{profileData.name}
 
-                        
-                    </Card.Header>
-
-                    <Card.Description>
-                      
-                                    <Embed id='lE6RYpe9IT0' source='youtube' />
-                      
-                    </Card.Description>
-
-                </Card.Content>
-                <Card.Content extra>
-                    <Grid divided='vertically'>
-                        <Grid.Row columns={4}>
-                            <Grid.Column>
-                                <Icon name="user" onClick={this.openEdit} size='large' />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="file pdf outline" size='large' />
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="linkedin" size='large'/>
-                            </Grid.Column>
-                            <Grid.Column>
-                                <Icon name="github" size='large'/>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-
-                 
+                            <Icon name="star" size='large' className="ui right floated" />
 
 
-                </Card.Content>
-                <Card.Content>
-                    <Label basic color='blue'>{skills[0]}</Label>
-                </Card.Content>
+                        </Card.Header>
 
-                </Card>)
+                        <Card.Description>
 
-        
-       
+                            <Embed id='lE6RYpe9IT0' source='youtube' />
+
+                        </Card.Description>
+
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Grid divided='vertically'>
+                            <Grid.Row columns={4}>
+                                <Grid.Column>
+                                    <Icon name="user" onClick={this.openEdit} size='large' />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Icon name="file pdf outline" size='large' />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Icon name="linkedin" size='large' />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <Icon name="github" size='large' />
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
+
+
+
+
+                    </Card.Content>
+                    <Card.Content>
+                        <Label basic color='blue'>{skills[0]}</Label>
+                    </Card.Content>
+                  
+
+                    </Card>
+              
+            </div>)
+
+
+
     }
 }
-

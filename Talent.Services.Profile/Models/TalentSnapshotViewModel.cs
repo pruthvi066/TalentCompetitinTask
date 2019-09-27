@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Talent.Common.Models;
 
 namespace Talent.Services.Profile.Models
 {
@@ -17,5 +18,10 @@ namespace Talent.Services.Profile.Models
         public string Visa { get; set; }
         public string Level { get; set; }
         public List<string> Skills { get; set; }
+
+        public static implicit operator List<object>(TalentSnapshotViewModel v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
